@@ -1,6 +1,6 @@
 {
     "name": "codezero/courier",
-    "description": "Simple HTTP request interface",
+    "description": "Simple HTTP request interface with optional caching",
     "keywords": [
         "api",
         "request",
