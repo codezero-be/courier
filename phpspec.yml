@@ -1,0 +1,5 @@
+suites:
+  codezero_suite:
+    namespace: CodeZero
+    src_path: src
+    spec_prefix: spec
