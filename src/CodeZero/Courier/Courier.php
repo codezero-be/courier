@@ -32,11 +32,10 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
      * @return Response
      */
-    public function put($url, array $data = [], array $headers = [], $cacheMinutes = 0);
+    public function put($url, array $data = [], array $headers = []);
 
     /**
      * Send PATCH request
@@ -44,11 +43,10 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
      * @return Response
      */
-    public function patch($url, array $data = [], array $headers = [], $cacheMinutes = 0);
+    public function patch($url, array $data = [], array $headers = []);
 
     /**
      * Send DELETE request
@@ -56,11 +54,10 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
      * @return Response
      */
-    public function delete($url, array $data = [], array $headers = [], $cacheMinutes = 0);
+    public function delete($url, array $data = [], array $headers = []);
 
     /**
      * Set basic authentication

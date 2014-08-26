@@ -60,6 +60,7 @@ class CurlCourier implements Courier {
      * @param array $headers
      * @param int $cacheMinutes
      *
+     * @throws RequestException
      * @return Response
      */
     public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0)
@@ -75,6 +76,7 @@ class CurlCourier implements Courier {
      * @param array $headers
      * @param int $cacheMinutes
      *
+     * @throws RequestException
      * @return Response
      */
     public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0)
@@ -88,13 +90,13 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
+     * @throws RequestException
      * @return Response
      */
-    public function put($url, array $data = [], array $headers = [], $cacheMinutes = 0)
+    public function put($url, array $data = [], array $headers = [])
     {
-        return $this->send('put', $url, $data, $headers, $cacheMinutes);
+        return $this->send('put', $url, $data, $headers);
     }
 
     /**
@@ -103,13 +105,13 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
+     * @throws RequestException
      * @return Response
      */
-    public function patch($url, array $data = [], array $headers = [], $cacheMinutes = 0)
+    public function patch($url, array $data = [], array $headers = [])
     {
-        return $this->send('patch', $url, $data, $headers, $cacheMinutes);
+        return $this->send('patch', $url, $data, $headers);
     }
 
     /**
@@ -118,13 +120,13 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
-     * @param int $cacheMinutes
      *
+     * @throws RequestException
      * @return Response
      */
-    public function delete($url, array $data = [], array $headers = [], $cacheMinutes = 0)
+    public function delete($url, array $data = [], array $headers = [])
     {
-        return $this->send('delete', $url, $data, $headers, $cacheMinutes);
+        return $this->send('delete', $url, $data, $headers);
     }
 
     /**
@@ -205,7 +207,7 @@ class CurlCourier implements Courier {
      * @throws RequestException
      * @return Response
      */
-    private function send($method, $url, array $data, array $headers, $cacheMinutes)
+    private function send($method, $url, array $data, array $headers, $cacheMinutes = 0)
     {
         if ($response = $this->getCachedResponse($method, $url, $data, $headers))
         {
