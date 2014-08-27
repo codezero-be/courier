@@ -30,6 +30,13 @@ class CurlCourier implements Courier {
     private $cache;
 
     /**
+     * Basic Authentication Credentials
+     *
+     * @var string
+     */
+    private $basicAuthCredentials;
+
+    /**
      * Constructor
      *
      * @param CurlRequest $curl
@@ -41,6 +48,7 @@ class CurlCourier implements Courier {
         $this->curl = $curl;
         $this->responseParser = $responseParser;
         $this->cache = $cache;
+        $this->basicAuthCredentials = '';
     }
 
     /**
@@ -130,6 +138,7 @@ class CurlCourier implements Courier {
      */
     public function setBasicAuthentication($username, $password)
     {
+        $this->basicAuthCredentials = implode(':', [$username, $password]);
         $this->curl->setBasicAuthentication($username, $password);
     }
 
@@ -140,6 +149,7 @@ class CurlCourier implements Courier {
      */
     public function unsetBasicAuthentication()
     {
+        $this->basicAuthCredentials = '';
         $this->curl->unsetBasicAuthentication();
     }
 
@@ -210,7 +220,7 @@ class CurlCourier implements Courier {
     {
         if ($this->cache)
         {
-            return $this->cache->findResponse($method, $url, $data, $headers);
+            return $this->cache->findResponse($method, $url, $data, $headers, $this->basicAuthCredentials);
         }
 
         return false;
@@ -232,7 +242,7 @@ class CurlCourier implements Courier {
     {
         if ($this->cache and $minutes > 0)
         {
-            $this->cache->storeResponse($response, $method, $url, $data, $headers, $minutes);
+            $this->cache->storeResponse($response, $method, $url, $data, $headers, $this->basicAuthCredentials, $minutes);
         }
     }
 

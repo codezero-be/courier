@@ -127,11 +127,11 @@ class CurlCourierSpec extends ObjectBehavior {
         $url = 'http://my.site/api';
         $cacheMinutes = 30;
 
-        $cache->findResponse('get', $url, [], [])->willReturn(false);
+        $cache->findResponse('get', $url, [], [], '')->willReturn(false);
         $curl->get($url, [], [])->willReturn($curlResponse);
         $responseParser->parse($curlResponse)->willReturn($response);
         $response->getHttpCode()->willReturn(200);
-        $cache->storeResponse($response, 'get', $url, [], [], $cacheMinutes)->shouldBeCalled();
+        $cache->storeResponse($response, 'get', $url, [], [], '', $cacheMinutes)->shouldBeCalled();
         $this->get($url, [], [], $cacheMinutes);
     }
 
@@ -140,7 +140,7 @@ class CurlCourierSpec extends ObjectBehavior {
         $url = 'http://my.site/api';
         $cacheMinutes = 30;
 
-        $cache->findResponse('get', $url, [], [])->willReturn($response);
+        $cache->findResponse('get', $url, [], [], '')->willReturn($response);
         $curl->get($url, [], [])->shouldNotBeCalled();
         $responseParser->parse($curlResponse)->shouldNotBeCalled();
         $response->getHttpCode()->shouldNotBeCalled();
@@ -153,7 +153,7 @@ class CurlCourierSpec extends ObjectBehavior {
         $url = 'http://my.site/api';
         $cacheMinutes = 0;
 
-        $cache->findResponse('get', $url, [], [])->willReturn(false);
+        $cache->findResponse('get', $url, [], [], '')->willReturn(false);
         $curl->get($url, [], [])->willReturn($curlResponse);
         $responseParser->parse($curlResponse)->willReturn($response);
         $response->getHttpCode()->willReturn(200);

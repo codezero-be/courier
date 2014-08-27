@@ -23,7 +23,7 @@ class CacheSpec extends ObjectBehavior {
         $method = 'get';
         $url = 'http://my.site/api';
 
-        $signature->generate($method, $url, [], [])->shouldBeCalled()->willReturn('signature');
+        $signature->generate($method, $url, [], [], '')->shouldBeCalled()->willReturn('signature');
         $cacheManager->find('signature')->shouldBeCalled()->willReturn('response');
         $this->findResponse($method, $url)->shouldReturn('response');
     }
@@ -33,7 +33,7 @@ class CacheSpec extends ObjectBehavior {
         $method = 'get';
         $url = 'http://my.site/api';
 
-        $signature->generate($method, $url, [], [])->shouldBeCalled()->willReturn('signature');
+        $signature->generate($method, $url, [], [], '')->shouldBeCalled()->willReturn('signature');
         $cacheManager->find('signature')->shouldBeCalled()->willReturn(false);
         $this->findResponse($method, $url)->shouldReturn(false);
     }
@@ -44,7 +44,7 @@ class CacheSpec extends ObjectBehavior {
         $url = 'http://my.site/api';
         $minutes = 30;
 
-        $signature->generate($method, $url, [], [])->shouldBeCalled()->willReturn('signature');
+        $signature->generate($method, $url, [], [], '')->shouldBeCalled()->willReturn('signature');
         $cacheManager->store('signature', $response, $minutes)->shouldBeCalled();
         $this->storeResponse($response, $method, $url);
     }

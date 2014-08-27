@@ -16,9 +16,10 @@ class RequestSignatureGeneratorSpec extends ObjectBehavior {
         $url = 'http://my.site/api';
         $data = ['do' => 'something', 'with' => 'this'];
         $headers = ['Some Header' => 'Some Value'];
-        $expectedResult = 'get|http://my.site/api|do=something&with=this|Some+Header=Some+Value';
+        $basicAuthCredentials = 'username:password';
+        $expectedResult = 'get|http://my.site/api|do=something&with=this|Some+Header=Some+Value|username:password';
 
-        $this->generate($method, $url, $data, $headers)->shouldReturn($expectedResult);
+        $this->generate($method, $url, $data, $headers, $basicAuthCredentials)->shouldReturn($expectedResult);
     }
 
 }

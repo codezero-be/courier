@@ -37,12 +37,13 @@ class Cache {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param string $basicAuthCredentials
      *
      * @return Response|bool
      */
-    public function findResponse($method, $url, array $data = [], array $headers = [])
+    public function findResponse($method, $url, array $data = [], array $headers = [], $basicAuthCredentials = '')
     {
-        $signature = $this->signature->generate($method, $url, $data, $headers);
+        $signature = $this->signature->generate($method, $url, $data, $headers, $basicAuthCredentials);
 
         return $this->cacheManager->find($signature);
     }
@@ -55,13 +56,14 @@ class Cache {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param string $basicAuthCredentials
      * @param int $minutes
      *
      * @return void
      */
-    public function storeResponse(Response $response, $method, $url, array $data = [], array $headers = [], $minutes = 30)
+    public function storeResponse(Response $response, $method, $url, array $data = [], array $headers = [], $basicAuthCredentials = '', $minutes = 30)
     {
-        $signature = $this->signature->generate($method, $url, $data, $headers);
+        $signature = $this->signature->generate($method, $url, $data, $headers, $basicAuthCredentials);
 
         $this->cacheManager->store($signature, $response, $minutes);
     }
