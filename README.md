@@ -51,10 +51,9 @@ At this point there is only one Courier implementation: `CurlCourier`. If you us
 
 	// Caching only available for Laravel at the moment
     $cache = null;
-    $cacheEnabled = false;
 
 	// Finally, instantiate Courier
-    $courier = new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache, $cacheEnabled);
+    $courier = new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache);
 
 ## Usage ##
 
@@ -104,25 +103,16 @@ If the conversion fails, a `CodeZero\Courier\Exceptions\ResponseConversionExcept
 
 ## Caching ##
 
-To enable caching, there are 3 conditions:
+To enable caching, there are 2 conditions:
 
 1. Courier needs to be instantiated with the `CodeZero\Courier\Cache\Cache` class and a valid implementation of the `CodeZero\Courier\Cache\CacheManager` has to be provided to this dependency.
-2. Caching needs to be enabled (default: true)
-3. Caching minutes need to be greater than zero (default: 0)
+2. Caching minutes need to be greater than zero (default: 0)
 
 ##### Each request can have a different cache time: #####
 
 Just specify it in the method call: 
 
 	$courier->get($url, $data, $headers, $cacheMinutes); 
-
-##### Enable caching at runtime: #####
-
-	$courier->enableCache();
-
-##### Disable caching at runtime: #####
-
-	$courier->disableCache();
 
 ##### Clear the cache at runtime: #####
 

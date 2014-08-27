@@ -13,7 +13,6 @@ class CurlCourierSpec extends ObjectBehavior {
     function let(CurlRequest $curl, CurlResponseParser $responseParser, Cache $cache)
     {
         $this->beConstructedWith($curl, $responseParser, $cache);
-        $this->disableCache(); //=> Testing without caching by default
     }
 
     function it_is_initializable()
@@ -117,16 +116,6 @@ class CurlCourierSpec extends ObjectBehavior {
         $this->unsetBasicAuthentication();
     }
 
-    function it_enables_and_disables_caching()
-    {
-        $this->disableCache();
-        $this->isCacheEnabled()->shouldBe(false);
-        $this->enableCache();
-        $this->isCacheEnabled()->shouldBe(true);
-        $this->disableCache();
-        $this->isCacheEnabled()->shouldBe(false);
-    }
-
     function it_forgets_cached_responses(Cache $cache)
     {
         $cache->forget()->shouldBeCalled();
@@ -137,7 +126,6 @@ class CurlCourierSpec extends ObjectBehavior {
     {
         $url = 'http://my.site/api';
         $cacheMinutes = 30;
-        $this->enableCache();
 
         $cache->findResponse('get', $url, [], [])->willReturn(false);
         $curl->get($url, [], [])->willReturn($curlResponse);
@@ -151,7 +139,6 @@ class CurlCourierSpec extends ObjectBehavior {
     {
         $url = 'http://my.site/api';
         $cacheMinutes = 30;
-        $this->enableCache();
 
         $cache->findResponse('get', $url, [], [])->willReturn($response);
         $curl->get($url, [], [])->shouldNotBeCalled();
@@ -165,7 +152,6 @@ class CurlCourierSpec extends ObjectBehavior {
     {
         $url = 'http://my.site/api';
         $cacheMinutes = 0;
-        $this->enableCache();
 
         $cache->findResponse('get', $url, [], [])->willReturn(false);
         $curl->get($url, [], [])->willReturn($curlResponse);

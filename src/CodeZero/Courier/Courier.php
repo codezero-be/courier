@@ -77,27 +77,6 @@ interface Courier {
     public function unsetBasicAuthentication();
 
     /**
-     * Check if caching is enabled
-     *
-     * @return bool
-     */
-    public function isCacheEnabled();
-
-    /**
-     * Enable caching
-     *
-     * @return void
-     */
-    public function enableCache();
-
-    /**
-     * Disable caching
-     *
-     * @return void
-     */
-    public function disableCache();
-
-    /**
      * Forget cached responses
      *
      * @return void

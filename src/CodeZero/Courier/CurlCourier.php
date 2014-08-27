@@ -30,26 +30,17 @@ class CurlCourier implements Courier {
     private $cache;
 
     /**
-     * Is Caching Enabled?
-     *
-     * @var bool
-     */
-    private $cacheEnabled;
-
-    /**
      * Constructor
      *
      * @param CurlRequest $curl
      * @param CurlResponseParser $responseParser
      * @param Cache $cache
-     * @param bool $cacheEnabled
      */
-    public function __construct(CurlRequest $curl, CurlResponseParser $responseParser, Cache $cache = null, $cacheEnabled = true)
+    public function __construct(CurlRequest $curl, CurlResponseParser $responseParser, Cache $cache = null)
     {
         $this->curl = $curl;
         $this->responseParser = $responseParser;
         $this->cache = $cache;
-        $this->cacheEnabled = $cacheEnabled;
     }
 
     /**
@@ -153,36 +144,6 @@ class CurlCourier implements Courier {
     }
 
     /**
-     * Check if caching is enabled
-     *
-     * @return bool
-     */
-    public function isCacheEnabled()
-    {
-        return $this->cacheEnabled;
-    }
-
-    /**
-     * Enable caching
-     *
-     * @return void
-     */
-    public function enableCache()
-    {
-        $this->cacheEnabled = true;
-    }
-
-    /**
-     * Disable caching
-     *
-     * @return void
-     */
-    public function disableCache()
-    {
-        $this->cacheEnabled = false;
-    }
-
-    /**
      * Forget cached responses
      *
      * @return void
@@ -247,7 +208,7 @@ class CurlCourier implements Courier {
      */
     private function getCachedResponse($method, $url, array $data, array $headers)
     {
-        if ($this->cache and $this->cacheEnabled)
+        if ($this->cache)
         {
             return $this->cache->findResponse($method, $url, $data, $headers);
         }
@@ -269,7 +230,7 @@ class CurlCourier implements Courier {
      */
     private function storeCachedResponse(Response $response, $method, $url, array $data, array $headers, $minutes)
     {
-        if ($this->cache and $this->cacheEnabled and $minutes > 0)
+        if ($this->cache and $minutes > 0)
         {
             $this->cache->storeResponse($response, $method, $url, $data, $headers, $minutes);
         }

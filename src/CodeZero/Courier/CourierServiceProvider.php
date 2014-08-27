@@ -45,9 +45,8 @@ class CourierServiceProvider extends ServiceProvider {
             $curlRequest = $app->make('CodeZero\Curl\Request');
             $responseParser = $app->make('CodeZero\Courier\CurlResponseParser');
             $cache = $app->make('CodeZero\Courier\Cache\Cache');
-            $cacheEnabled = true;
 
-            return new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache, $cacheEnabled);
+            return new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache);
         });
     }
 
