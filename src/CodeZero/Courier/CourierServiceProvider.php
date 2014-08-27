@@ -21,7 +21,6 @@ class CourierServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->registerCurlCourier();
         $this->registerCourier();
         $this->registerCacheManager();
     }
@@ -41,22 +40,11 @@ class CourierServiceProvider extends ServiceProvider {
      */
     private function registerCourier()
     {
-        $this->app->bind(
-            'CodeZero\Courier\Courier',
-            'CodeZero\Courier\CurlCourier'
-        );
-    }
-
-    /**
-     * Register the curl courier service binding
-     */
-    private function registerCurlCourier()
-    {
-        $this->app->bind('CodeZero\Courier\CurlCourier', function()
+        $this->app->bind('CodeZero\Courier\Courier', function($app)
         {
-            $curlRequest = $this->app->make('CodeZero\Curl\Request');
-            $responseParser = $this->app->make('CodeZero\Courier\CurlResponseParser');
-            $cache = $this->app->make('CodeZero\Courier\Cache\Cache');
+            $curlRequest = $app->make('CodeZero\Curl\Request');
+            $responseParser = $app->make('CodeZero\Courier\CurlResponseParser');
+            $cache = $app->make('CodeZero\Courier\Cache\Cache');
             $cacheEnabled = true;
 
             return new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache, $cacheEnabled);
