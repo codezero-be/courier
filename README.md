@@ -57,6 +57,18 @@ At this point there is only one Courier implementation: `CurlCourier`. If you us
 
 ## Usage ##
 
+##### Inject the Courier instance into your own class: #####
+
+	private $courier;
+	
+	public function __construct(\CodeZero\Courier\Courier $courier)
+	{
+	    $this->courier = $courier;
+	}
+
+Laravel will then find the `Courier` class automatically if you registered the service provider.
+Or you can inject an instance manually: `$myClass = new MyClass($courier);`
+
 ##### Configure your request: #####
 
 	$url = 'http://my.site/api';
@@ -72,11 +84,11 @@ At this point there is only one Courier implementation: `CurlCourier`. If you us
 
 ##### Send the request: (one of the following) #####
 
-	$response = $courier->get($url, $data, $headers, $cacheMinutes);
-	$response = $courier->post($url, $data, $headers, $cacheMinutes);
-	$response = $courier->put($url, $data, $headers, $cacheMinutes);
-	$response = $courier->patch($url, $data, $headers, $cacheMinutes);
-	$response = $courier->delete($url, $data, $headers, $cacheMinutes);
+	$response = $this->courier->get($url, $data, $headers, $cacheMinutes);
+	$response = $this->courier->post($url, $data, $headers, $cacheMinutes);
+	$response = $this->courier->put($url, $data, $headers, $cacheMinutes);
+	$response = $this->courier->patch($url, $data, $headers, $cacheMinutes);
+	$response = $this->courier->delete($url, $data, $headers, $cacheMinutes);
 
 All of these methods will return an instance of the `CodeZero\Courier\Response` class.
 
@@ -112,21 +124,21 @@ To enable caching, there are 2 conditions:
 
 Just specify it in the method call: 
 
-	$courier->get($url, $data, $headers, $cacheMinutes); 
+	$this->courier->get($url, $data, $headers, $cacheMinutes); 
 
 ##### Clear the cache at runtime: #####
 
-	$courier->forgetCache();
+	$this->courier->forgetCache();
 
 ## Basic Authentication ##
 
 If you require the use of basic authentication, you can enable this before sending the request:
 
-	$courier->setBasicAuthentication('username', 'password');
+	$this->courier->setBasicAuthentication('username', 'password');
 
 You can also undo this:
 
-	$courier->unsetBasicAuthentication();
+	$this->courier->unsetBasicAuthentication();
 
 ## Exceptions ##
 
