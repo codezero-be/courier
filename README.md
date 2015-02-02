@@ -149,3 +149,6 @@ A `CodeZero\Courier\Exceptions\RequestException` will be thrown, if  the request
 #### Response issues ####
 
 A `CodeZero\Courier\Exceptions\HttpRequestException` will be thrown, if there was a HTTP response error >= 400.
+
+---
+[![Analytics](https://ga-beacon.appspot.com/UA-58876018-1/codezero-be/courier)](https://github.com/igrigorik/ga-beacon)
