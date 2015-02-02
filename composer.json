@@ -25,8 +25,8 @@
         "phpspec/phpspec": "~2.0"
     },
     "autoload": {
-        "psr-0": {
-            "CodeZero\\Courier": "src/"
+        "psr-4": {
+            "CodeZero\\Courier\\": "src/"
         }
     },
     "minimum-stability": "stable"

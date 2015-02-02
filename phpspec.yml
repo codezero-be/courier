@@ -1,5 +1,7 @@
 suites:
   codezero_suite:
-    namespace: CodeZero
+    namespace: CodeZero\Courier
     src_path: src
+    spec_path: .
     spec_prefix: spec
+    psr4_prefix: CodeZero\Courier
