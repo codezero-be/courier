@@ -20,6 +20,12 @@ class CurlCourierSpec extends ObjectBehavior {
         $this->shouldHaveType('CodeZero\Courier\CurlCourier');
     }
 
+    function it_is_initializable_without_constructor_arguments()
+    {
+        $this->beConstructedWith();
+        $this->shouldHaveType('CodeZero\Courier\CurlCourier');
+    }
+
     function it_sends_a_get_request_and_returns_a_response_on_success(CurlRequest $curl, CurlResponseParser $responseParser, CurlResponse $curlResponse, Response $response)
     {
         $url = 'http://my.site/api';

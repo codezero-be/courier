@@ -15,7 +15,7 @@ This package offers an easy to use set of functions to send HTTP requests in PHP
 - Optional Caching (only [Laravel](http://www.laravel.com/ "Laravel") implementation included)
 - Optional [Laravel](http://www.laravel.com/ "Laravel") ServiceProvider included
 
-Currently there is only one library that this package uses internally to make the HTTP requests: [codezero-be/curl](https://github.com/codezero-be/curl "codezero-be/curl"). This library uses the cURL extention behind the scenes. It is possible however to write other implementations by implementing the `CodeZero\Courier\Courier` interface.
+> Currently there is only one library that this package uses internally to make the HTTP requests: [codezero-be/curl](https://github.com/codezero-be/curl "codezero-be/curl"). This library uses the cURL extention behind the scenes. It is possible however to write other implementations by implementing the `CodeZero\Courier\Courier` interface.
 
 ## Installation ##
 
@@ -37,34 +37,27 @@ After installing, update your `app/config/app.php` file to include a reference t
 
 ### CurlCourier ###
 
-At this point there is only one Courier implementation: `CurlCourier`. If you use Laravel, then the included ServiceProvider will automatically instantiate everything for you. However, this is the manual way:
+At this point there is only one Courier implementation: `CurlCourier`. All of its arguments are optional, including a `Cache` driver which is only available for Laravel at the moment. 
 
-	// Instantiate Curl Request Dependencies
-    $curl = new \CodeZero\Curl\Curl();
-    $optionParser = new \CodeZero\Curl\OptionParser();
-    $responseFactory = new \CodeZero\Curl\ResponseFactory();
-    $curlRequest = new \CodeZero\Curl\Request($curl, $optionParser, $responseFactory);
+    use CodeZero\Courier\CurlCourier;
 
-	// Instantiate CurlResponseParser Dependencies
-	$responseCodes = new \CodeZero\Courier\ResponseCodes();
-	$responseParser = new \CodeZero\Courier\CurlResponseParser($responseCodes);
-
-	// Caching only available for Laravel at the moment
-    $cache = null;
-
-	// Finally, instantiate Courier
-    $courier = new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache);
+    $courier = new CurlCourier();
 
 ## Usage ##
 
 ##### Inject the Courier instance into your own class: #####
 
-	private $courier;
+    use CodeZero\Courier\Courier; //=> The interface
+
+    class MyClass {
+
+	    private $courier;
 	
-	public function __construct(\CodeZero\Courier\Courier $courier)
-	{
-	    $this->courier = $courier;
-	}
+	    public function __construct(Courier $courier)
+	    {
+	        $this->courier = $courier;
+	    }
+    }
 
 Laravel will then find the `Courier` class automatically if you registered the service provider.
 Or you can inject an instance manually: `$myClass = new MyClass($courier);`
