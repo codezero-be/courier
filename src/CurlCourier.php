@@ -59,8 +59,9 @@ class CurlCourier implements Courier {
      * @param array $headers
      * @param int $cacheMinutes
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0)
     {
@@ -75,8 +76,9 @@ class CurlCourier implements Courier {
      * @param array $headers
      * @param int $cacheMinutes
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0)
     {
@@ -90,8 +92,9 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     public function put($url, array $data = [], array $headers = [])
     {
@@ -105,8 +108,9 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     public function patch($url, array $data = [], array $headers = [])
     {
@@ -120,8 +124,9 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     public function delete($url, array $data = [], array $headers = [])
     {
@@ -175,8 +180,9 @@ class CurlCourier implements Courier {
      * @param array $headers
      * @param int $cacheMinutes
      *
-     * @throws RequestException
      * @return Response
+     * @throws HttpRequestException
+     * @throws RequestException
      */
     private function send($method, $url, array $data, array $headers, $cacheMinutes = 0)
     {
@@ -192,7 +198,7 @@ class CurlCourier implements Courier {
             // Convert the response
             $response = $this->responseParser->parse($curlResponse);
 
-            $this->throwExceptionOnErrors($response);
+            $this->throwExceptionOnHttpErrors($response);
             $this->storeCachedResponse($response, $method, $url, $data, $headers, $cacheMinutes);
 
             return $response;
@@ -202,7 +208,7 @@ class CurlCourier implements Courier {
             $code = $exception->getCode();
             $message = $exception->getMessage();
 
-            throw new RequestException($message, $code);
+            throw new RequestException($message, $code, $exception);
         }
     }
 
@@ -251,10 +257,10 @@ class CurlCourier implements Courier {
      *
      * @param Response $response
      *
-     * @throws HttpRequestException
      * @return void
+     * @throws HttpRequestException
      */
-    private function throwExceptionOnErrors(Response $response)
+    private function throwExceptionOnHttpErrors(Response $response)
     {
         $httpCode = $response->getHttpCode();
 
