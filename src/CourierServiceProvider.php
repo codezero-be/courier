@@ -5,34 +5,25 @@ use Illuminate\Support\ServiceProvider;
 class CourierServiceProvider extends ServiceProvider {
 
     /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->package('codezero/courier');
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        $this->registerCourier();
         $this->registerCacheManager();
+        $this->registerCourier();
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * Register the cache manager service binding
      */
-    public function provides()
+    private function registerCacheManager()
     {
-        return ['courier'];
+        $this->app->bind(
+            'CodeZero\Courier\Cache\CacheManager',
+            'CodeZero\Courier\Cache\LaravelCacheManager'
+        );
     }
 
     /**
@@ -46,19 +37,8 @@ class CourierServiceProvider extends ServiceProvider {
             $responseParser = $app->make('CodeZero\Courier\CurlResponseParser');
             $cache = $app->make('CodeZero\Courier\Cache\Cache');
 
-            return new \CodeZero\Courier\CurlCourier($curlRequest, $responseParser, $cache);
+            return new CurlCourier($curlRequest, $responseParser, $cache);
         });
-    }
-
-    /**
-     * Register the cache manager service binding
-     */
-    private function registerCacheManager()
-    {
-        $this->app->bind(
-            'CodeZero\Courier\Cache\CacheManager',
-            'CodeZero\Courier\Cache\LaravelCacheManager'
-        );
     }
 
 }
