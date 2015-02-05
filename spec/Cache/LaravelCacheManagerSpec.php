@@ -1,6 +1,6 @@
 <?php namespace spec\CodeZero\Courier\Cache;
 
-use Illuminate\Cache\Repository as IlluminateCache;
+use Illuminate\Contracts\Cache\Repository as IlluminateCache;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
