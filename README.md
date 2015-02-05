@@ -25,23 +25,21 @@ Install this package through Composer:
     	"codezero/courier": "1.*"
     }
 
-## Laravel 4 Implementation ##
-
-After installing, update your `app/config/app.php` file to include a reference to this package's service provider in the providers array:
-
-    'providers' => [
-	    'CodeZero\Courier\CourierServiceProvider'
-    ]
-
 ## Manual Implementation ##
-
-### CurlCourier ###
 
 At this point there is only one Courier implementation: `CurlCourier`. All of its arguments are optional, including a `Cache` driver which is only available for Laravel at the moment. 
 
     use CodeZero\Courier\CurlCourier;
 
     $courier = new CurlCourier();
+
+## Laravel 5 Implementation ##
+
+After installing, update your `config/app.php` file to include a reference to this package's service provider in the providers array:
+
+    'providers' => [
+	    'CodeZero\Courier\CourierServiceProvider'
+    ]
 
 ## Usage ##
 
