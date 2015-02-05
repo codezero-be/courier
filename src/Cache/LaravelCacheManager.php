@@ -1,6 +1,6 @@
 <?php namespace CodeZero\Courier\Cache; 
 
-use Illuminate\Cache\Repository as IlluminateCache;
+use Illuminate\Contracts\Cache\Repository as IlluminateCache;
 
 class LaravelCacheManager implements CacheManager {
 
