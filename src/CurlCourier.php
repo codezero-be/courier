@@ -1,7 +1,7 @@
 <?php namespace CodeZero\Courier;
 
 use CodeZero\Courier\Cache\Cache;
-use CodeZero\Courier\Exceptions\HttpRequestException;
+use CodeZero\Courier\Exceptions\HttpException;
 use CodeZero\Courier\Exceptions\RequestException;
 use CodeZero\Curl\Request as CurlRequest;
 use CodeZero\Curl\RequestException as CurlRequestException;
@@ -60,7 +60,7 @@ class CurlCourier implements Courier {
      * @param int $cacheMinutes
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0)
@@ -77,7 +77,7 @@ class CurlCourier implements Courier {
      * @param int $cacheMinutes
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0)
@@ -93,7 +93,7 @@ class CurlCourier implements Courier {
      * @param array $headers
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     public function put($url, array $data = [], array $headers = [])
@@ -109,7 +109,7 @@ class CurlCourier implements Courier {
      * @param array $headers
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     public function patch($url, array $data = [], array $headers = [])
@@ -125,7 +125,7 @@ class CurlCourier implements Courier {
      * @param array $headers
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     public function delete($url, array $data = [], array $headers = [])
@@ -181,7 +181,7 @@ class CurlCourier implements Courier {
      * @param int $cacheMinutes
      *
      * @return Response
-     * @throws HttpRequestException
+     * @throws HttpException
      * @throws RequestException
      */
     private function send($method, $url, array $data, array $headers, $cacheMinutes = 0)
@@ -258,7 +258,7 @@ class CurlCourier implements Courier {
      * @param Response $response
      *
      * @return void
-     * @throws HttpRequestException
+     * @throws HttpException
      */
     private function throwExceptionOnHttpErrors(Response $response)
     {
@@ -269,7 +269,7 @@ class CurlCourier implements Courier {
             // Get the description of the http error code
             $httpMessage = $response->getHttpMessage($httpCode);
 
-            throw new HttpRequestException($response, $httpMessage, $httpCode);
+            throw new HttpException($response, $httpMessage, $httpCode);
         }
     }
 

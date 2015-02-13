@@ -100,7 +100,7 @@ class CurlCourierSpec extends ObjectBehavior {
         $response->getHttpCode()->shouldBeCalled()->willReturn(404);
         $response->getHttpMessage(404)->shouldBeCalled()->willReturn('error message');
 
-        $this->shouldThrow('CodeZero\Courier\Exceptions\HttpRequestException')->duringGet($url);
+        $this->shouldThrow('CodeZero\Courier\Exceptions\HttpException')->duringGet($url);
     }
 
     function it_throws_on_curl_error(CurlRequest $curl)

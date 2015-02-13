@@ -3,7 +3,7 @@
 use CodeZero\Courier\Response;
 use Exception;
 
-class HttpRequestException extends Exception {
+class HttpException extends Exception {
 
     /**
      * Response
