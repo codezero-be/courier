@@ -22,7 +22,7 @@ This package offers an easy to use set of functions to send HTTP requests in PHP
 Install this package through Composer:
 
     "require": {
-    	"codezero/courier": "1.*"
+    	"codezero/courier": "2.*"
     }
 
 ## Manual Implementation ##
@@ -139,7 +139,7 @@ A `CodeZero\Courier\Exceptions\RequestException` will be thrown, if  the request
 
 #### Response issues ####
 
-A `CodeZero\Courier\Exceptions\HttpRequestException` will be thrown, if there was a HTTP response error >= 400.
+A `CodeZero\Courier\Exceptions\HttpException` will be thrown, if there was a HTTP response error >= 400.
 
 ---
 [![Analytics](https://ga-beacon.appspot.com/UA-58876018-1/codezero-be/courier)](https://github.com/igrigorik/ga-beacon)
