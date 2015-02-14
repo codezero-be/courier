@@ -178,7 +178,7 @@ class CurlCourierSpec extends ObjectBehavior {
         $responseParser->parse($curlResponse)->shouldBeCalled()->willReturn($response);
         $response->getHttpCode()->shouldBeCalled()->willReturn(404);
         $response->getHttpMessage(404)->shouldBeCalled()->willReturn('error message');
-        $handler->handleHttpException(Argument::type(HttpException::class))->shouldBeCalled()->willReturn('anything');
+        $handler->handleHttpException(Argument::type('CodeZero\Courier\Exceptions\HttpException'))->shouldBeCalled()->willReturn('anything');
 
         $this->get($url, [], [], 0, $handler)->shouldReturn('anything');
     }
