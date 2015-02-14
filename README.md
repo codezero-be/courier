@@ -107,13 +107,19 @@ All of these methods will return an instance of the `CodeZero\Courier\Response` 
 	$responseType = $response->getResponseType(); //=> "application/json"
 	$responseCharset = $response->getResponseCharset(); //=> "UTF-8" 
 
-### Convert the Response to an Array
+### Convert the Response
 
-If you are sending API requests, chances are high that you get JSON data in return. To convert this data to a PHP array just run:
+You can convert a JSON or serialized response to an associative array or to an array of generic PHP objects. If you are sending API requests, chances are high that you get `application/json` data in return. The Flickr API `php_serial` responses are of type `application/binary` and serializable.
+
+To convert this data just run:
 
 	$array = $response->toArray();
+    echo $array[0]['some']['nested']['key'];
 
-This will also work if the response is of type `application/binary` and serializable (like the Flickr API `php_serial` responses). If for some reason the conversion fails, a `CodeZero\Courier\Exceptions\ResponseConversionException` will be thrown.
+	$objects = $response->toObjects();
+    echo $objects[0]->some->nested->key;
+
+If for some reason the conversion fails, a `CodeZero\Courier\Exceptions\ResponseConversionException` will be thrown.
 
 ## Caching
 

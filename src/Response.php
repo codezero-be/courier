@@ -124,32 +124,85 @@ class Response {
      */
     public function toArray()
     {
-        $array = null;
-        $responseType = $this->getResponseType();
-        $responseBody = $this->getBody();
+        $response = $this->convertJsonResponse(true) ?: $this->convertSerializedResponse();
 
-        if ($responseType == 'application/binary')
+        if ( ! is_array($response))
         {
-            $array = unserialize($responseBody);
+            $this->throwResponseConversionException();
+        }
 
-            if ( ! is_array($array))
+        return $response;
+    }
+
+    /**
+     * Convert the response body to PHP Objects
+     *
+     * @return array|object
+     * @throws ResponseConversionException
+     */
+    public function toObjects()
+    {
+        $response = $this->convertJsonResponse();
+
+        if ( ! $response)
+        {
+            $this->throwResponseConversionException();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Convert the JSON response to JSON or an array
+     *
+     * @param bool $toArray
+     *
+     * @return bool|mixed
+     */
+    private function convertJsonResponse($toArray = false)
+    {
+        if ($this->getResponseType() == 'application/json')
+        {
+            return json_decode($this->getBody(), $toArray);
+        }
+
+        return false;
+    }
+
+    /**
+     * Convert the serialized response to an array
+     *
+     * @return bool|mixed
+     */
+    private function convertSerializedResponse()
+    {
+        if ($this->getResponseType() == 'application/binary')
+        {
+            $response = @unserialize($this->getBody());
+
+            if ( ! is_array($response))
             {
-                $array = null;
+                // Maybe the response was a serialized JSON string
+                // So let's try to convert that to an array...
+                return json_decode($response, true);
             }
-        }
-        elseif ($responseType == 'application/json')
-        {
-            $array = json_decode($responseBody, true);
+
+            return $response;
         }
 
-        if ( ! $array)
-        {
-            $msg = "Cannot convert the response content of type [$responseType] to an array";
+        return false;
+    }
 
-            throw new ResponseConversionException($msg);
-        }
+    /**
+     * Throw a ResponseConversionException
+     *
+     * @throws ResponseConversionException
+     */
+    private function throwResponseConversionException()
+    {
+        $msg = "Could not convert the response content of type [{$this->getResponseType()}]";
 
-        return $array;
+        throw new ResponseConversionException($msg);
     }
 
     /**
