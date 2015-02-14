@@ -9,10 +9,11 @@ interface Courier {
      * @param array $data
      * @param array $headers
      * @param int $cacheMinutes
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      */
-    public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0);
+    public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0, HttpExceptionHandler $handler = null);
 
     /**
      * Send POST request
@@ -21,10 +22,11 @@ interface Courier {
      * @param array $data
      * @param array $headers
      * @param int $cacheMinutes
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      */
-    public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0);
+    public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0, HttpExceptionHandler $handler = null);
 
     /**
      * Send PUT request
@@ -32,10 +34,11 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      */
-    public function put($url, array $data = [], array $headers = []);
+    public function put($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null);
 
     /**
      * Send PATCH request
@@ -43,10 +46,11 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      */
-    public function patch($url, array $data = [], array $headers = []);
+    public function patch($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null);
 
     /**
      * Send DELETE request
@@ -54,10 +58,11 @@ interface Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      */
-    public function delete($url, array $data = [], array $headers = []);
+    public function delete($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null);
 
     /**
      * Set basic authentication

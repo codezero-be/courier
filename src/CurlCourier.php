@@ -58,14 +58,16 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      * @param int $cacheMinutes
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
+     * @throws \Exception
      */
-    public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0)
+    public function get($url, array $data = [], array $headers = [], $cacheMinutes = 0, HttpExceptionHandler $handler = null)
     {
-        return $this->send('get', $url, $data, $headers, $cacheMinutes);
+        return $this->send('get', $url, $data, $headers, $cacheMinutes, $handler);
     }
 
     /**
@@ -75,14 +77,16 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      * @param int $cacheMinutes
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
+     * @throws \Exception
      */
-    public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0)
+    public function post($url, array $data = [], array $headers = [], $cacheMinutes = 0, HttpExceptionHandler $handler = null)
     {
-        return $this->send('post', $url, $data, $headers, $cacheMinutes);
+        return $this->send('post', $url, $data, $headers, $cacheMinutes, $handler);
     }
 
     /**
@@ -91,14 +95,16 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
+     * @throws \Exception
      */
-    public function put($url, array $data = [], array $headers = [])
+    public function put($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null)
     {
-        return $this->send('put', $url, $data, $headers);
+        return $this->send('put', $url, $data, $headers, $handler);
     }
 
     /**
@@ -107,14 +113,16 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
+     * @throws \Exception
      */
-    public function patch($url, array $data = [], array $headers = [])
+    public function patch($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null)
     {
-        return $this->send('patch', $url, $data, $headers);
+        return $this->send('patch', $url, $data, $headers, $handler);
     }
 
     /**
@@ -123,14 +131,16 @@ class CurlCourier implements Courier {
      * @param string $url
      * @param array $data
      * @param array $headers
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
+     * @throws \Exception
      */
-    public function delete($url, array $data = [], array $headers = [])
+    public function delete($url, array $data = [], array $headers = [], HttpExceptionHandler $handler = null)
     {
-        return $this->send('delete', $url, $data, $headers);
+        return $this->send('delete', $url, $data, $headers, $handler);
     }
 
     /**
@@ -179,12 +189,13 @@ class CurlCourier implements Courier {
      * @param array $data
      * @param array $headers
      * @param int $cacheMinutes
+     * @param HttpExceptionHandler $handler
      *
      * @return Response
      * @throws HttpException
      * @throws RequestException
      */
-    private function send($method, $url, array $data, array $headers, $cacheMinutes = 0)
+    private function send($method, $url, array $data, array $headers, $cacheMinutes = 0, HttpExceptionHandler $handler = null)
     {
         if ($response = $this->getCachedResponse($method, $url, $data, $headers))
         {
@@ -209,6 +220,15 @@ class CurlCourier implements Courier {
             $message = $exception->getMessage();
 
             throw new RequestException($message, $code, $exception);
+        }
+        catch (HttpException $exception)
+        {
+            if ( ! $handler)
+            {
+                throw $exception;
+            }
+
+            return $handler->handleHttpException($exception);
         }
     }
 

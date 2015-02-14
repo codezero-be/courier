@@ -2,9 +2,12 @@
 
 use CodeZero\Courier\Cache\Cache;
 use CodeZero\Courier\CurlResponseParser;
+use CodeZero\Courier\Exceptions\HttpException;
+use CodeZero\Courier\HttpExceptionHandler;
 use CodeZero\Courier\Response;
 use CodeZero\Curl\Request as CurlRequest;
 use CodeZero\Curl\Response as CurlResponse;
+use Mockery;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -165,6 +168,19 @@ class CurlCourierSpec extends ObjectBehavior {
         $response->getHttpCode()->willReturn(200);
         $cache->storeResponse($response, 'get', $url, [], [], $cacheMinutes)->shouldNotBeCalled();
         $this->get($url, [], [], $cacheMinutes);
+    }
+
+    function it_accepts_a_handler_class_for_http_exceptions(CurlRequest $curl, CurlResponseParser $responseParser, CurlResponse $curlResponse, Response $response, HttpExceptionHandler $handler)
+    {
+        $url = 'http://my.site/api';
+
+        $curl->get($url, [], [])->shouldBeCalled()->willReturn($curlResponse);
+        $responseParser->parse($curlResponse)->shouldBeCalled()->willReturn($response);
+        $response->getHttpCode()->shouldBeCalled()->willReturn(404);
+        $response->getHttpMessage(404)->shouldBeCalled()->willReturn('error message');
+        $handler->handleHttpException(Argument::type(HttpException::class))->shouldBeCalled()->willReturn('anything');
+
+        $this->get($url, [], [], 0, $handler)->shouldReturn('anything');
     }
 
 }
