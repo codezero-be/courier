@@ -52,9 +52,11 @@ class CurlResponseParser {
     private function getResponseType($contentType)
     {
         $length = strpos($contentType, ';') ?: null;
-        $type = strtolower(trim(substr($contentType, 0, $length)));
+        $type = $length
+            ? substr($contentType, 0, $length)
+            : $contentType;
 
-        return $type;
+        return strtolower(trim($type));
     }
 
     /**
