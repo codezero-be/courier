@@ -8,6 +8,7 @@ class ResponseSpec extends ObjectBehavior {
     private static $responseJson = '[{"key":"value"},{"key":"value"}]';
     private static $responseSerializedJson = 's:33:"[{"key":"value"},{"key":"value"}]";'; //=> Serialized JSON string
     private static $responseSerializedArray = 'a:2:{i:0;a:1:{s:3:"key";s:5:"value";}i:1;a:1:{s:3:"key";s:5:"value";}}'; //=> Serialized array
+    private static $responseSerializedObject = 'O:8:"stdClass":1:{s:3:"key";s:5:"value";}'; //=> Serialized object
     private static $responseToArray = [["key" => "value"], ["key" => "value"]];
 
     private static $responseTypeJson = "application/json";
@@ -70,6 +71,36 @@ class ResponseSpec extends ObjectBehavior {
     {
         $this->beConstructedWith(self::$responseSerializedArray, self::$responseTypeSerialized, self::$responseCharset, self::$httpCode, self::$httpMessage);
         $this->toArray()->shouldReturn(self::$responseToArray);
+    }
+
+    function it_converts_a_serialized_array_to_objects()
+    {
+        $this->beConstructedWith(self::$responseSerializedArray, self::$responseTypeSerialized, self::$responseCharset, self::$httpCode, self::$httpMessage);
+
+        // json_decode($string, false) returns an array
+        // of stdClass objects with a property "key": "value"
+        $obj = (object) ["key" => "value"];
+        $array = [$obj,$obj];
+
+        $this->toObjects()->shouldBeLike($array);
+    }
+
+    function it_converts_serialized_objects_to_objects()
+    {
+        $this->beConstructedWith(self::$responseSerializedObject, self::$responseTypeSerialized, self::$responseCharset, self::$httpCode, self::$httpMessage);
+
+        $obj = (object) ["key" => "value"];
+
+        $this->toObjects()->shouldBeLike($obj);
+    }
+
+    function it_converts_serialized_objects_to_an_array()
+    {
+        $this->beConstructedWith(self::$responseSerializedObject, self::$responseTypeSerialized, self::$responseCharset, self::$httpCode, self::$httpMessage);
+
+        $array = ["key" => "value"];
+
+        $this->toArray()->shouldReturn($array);
     }
 
     function it_converts_serialized_json_to_an_array()
