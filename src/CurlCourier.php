@@ -46,8 +46,8 @@ class CurlCourier implements Courier {
     public function __construct(CurlRequest $curl = null, CurlResponseParser $responseParser = null, Cache $cache = null)
     {
         $this->curl = $curl ?: new CurlRequest();
-        $this->responseParser = $responseParser ?: new CurlResponseParser(new ResponseCodes());
-        $this->cache = $cache;
+        $this->responseParser = $responseParser ?: new CurlResponseParser();
+        $this->cache = $cache ?: new Cache();
         $this->basicAuthCredentials = '';
     }
 

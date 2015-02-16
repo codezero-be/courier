@@ -12,10 +12,8 @@ This package offers an easy to use set of functions to send HTTP requests in PHP
 - Easy to use GET, POST, PUT, PATCH and DELETE functions (see [usage](#usage))
 - Send optional data and headers with your requests
 - Use optional basic authentication with your requests
-- Optional Caching (only [Laravel](http://www.laravel.com/ "Laravel") implementation included)
-- Optional [Laravel](http://www.laravel.com/ "Laravel") ServiceProvider included
-
-> Currently there is only one library that this package uses internally to make the HTTP requests: [codezero-be/curl](https://github.com/codezero-be/curl "codezero-be/curl"). This library uses the cURL extention behind the scenes. It is possible however to write other implementations by implementing the `CodeZero\Courier\Courier` interface.
+- Optional caching of GET and POST responses
+- [Laravel 5](http://www.laravel.com/ "Laravel") ServiceProvider included!
 
 ## Installation
 
@@ -29,7 +27,7 @@ Install this package through Composer:
 
 ### Manual
 
-At this point there is only one Courier implementation: `CurlCourier`. All of its arguments are optional, including a `Cache` driver which is only available for Laravel at the moment. 
+At this point there is only one Courier implementation: `CurlCourier`, which uses [codezero-be/curl](https://github.com/codezero-be/curl "codezero-be/curl") and the PHP cURL extension behind the scenes.
 
     use CodeZero\Courier\CurlCourier;
 
@@ -70,9 +68,9 @@ Or you can inject an instance manually: `$myClass = new MyClass($courier);`
     $data = ['do' => 'something', 'with' => 'this']; //=> Optional
     $headers = ['Some Header' => 'Some Value']; //=> Optional
 
-### Enable Caching (Laravel Only)
+### Enable Caching
 
-Optional number of minutes to cache the request/response. Until it expires Courier will not actually hit the requested URL, but return a cached response! At the moment this is only usable for Laravel...
+Optional number of minutes to cache the request/response. Until it expires Courier will not actually hit the requested URL, but return a cached response! If you use Laravel then Laravel's [`Cache`](http://laravel.com/docs/5.0/cache) will be used. If not then [`phpFastCache`](https://github.com/khoaofgod/phpfastcache) is used.
 
 	$cacheMinutes = 30; //=> Default = 0 (no caching)
 
@@ -125,7 +123,7 @@ If for some reason the conversion fails, a `CodeZero\Courier\Exceptions\Response
 
 To enable caching, there are 2 conditions:
 
-1. Courier needs to be instantiated with the `CodeZero\Courier\Cache\Cache` class and a valid implementation of the `CodeZero\Courier\Cache\CacheManager` has to be provided to this dependency.
+1. Courier needs to be instantiated with the `CodeZero\Courier\Cache\Cache` class and a valid implementation of the `CodeZero\Courier\Cache\CacheManager` has to be provided to this dependency. This is done automatically.
 2. Caching minutes need to be greater than zero (default: 0)
 
 ### Cache Time

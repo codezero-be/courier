@@ -24,10 +24,10 @@ class Cache {
      * @param CacheManager $cacheManager
      * @param RequestSignatureGenerator $signature
      */
-    public function __construct(CacheManager $cacheManager, RequestSignatureGenerator $signature)
+    public function __construct(CacheManager $cacheManager = null, RequestSignatureGenerator $signature = null)
     {
-        $this->cacheManager = $cacheManager;
-        $this->signature = $signature;
+        $this->cacheManager = $cacheManager ?: new PhpFastCacheManager();
+        $this->signature = $signature ?: new RequestSignatureGenerator();
     }
 
     /**
