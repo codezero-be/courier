@@ -16,7 +16,7 @@ class CurlResponseParser {
      *
      * @param ResponseCodes $responseCodes
      */
-    public function __construct(ResponseCodes $responseCodes)
+    public function __construct(ResponseCodes $responseCodes = null)
     {
         $this->responseCodes = $responseCodes ?: new ResponseCodes();
     }
