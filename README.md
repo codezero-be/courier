@@ -1,9 +1,10 @@
 # Courier - HTTP Requests Made Easy
 
+[![GitHub release](https://img.shields.io/github/release/codezero-be/courier.svg)]()
+[![License](https://img.shields.io/packagist/l/codezero/courier.svg)]()
 [![Build Status](https://img.shields.io/travis/codezero-be/courier.svg?branch=master)](https://travis-ci.org/codezero-be/courier)
-[![Packagist](https://img.shields.io/packagist/v/codezero/courier.svg)](https://packagist.org/packages/codezero/courier)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/codezero-be/courier.svg)](https://scrutinizer-ci.com/g/codezero-be/courier)
 [![Total Downloads](https://img.shields.io/packagist/dt/codezero/courier.svg)](https://packagist.org/packages/codezero/courier)
-[![License](https://img.shields.io/packagist/l/codezero/courier.svg)](https://packagist.org/packages/codezero/courier)
 
 This package offers an easy to use set of functions to send HTTP requests in PHP.
 
@@ -169,6 +170,18 @@ A `CodeZero\Courier\Exceptions\HttpException` will be thrown, if there was a HTT
         // throw your exception
         // or return something
     }
+
+## Testing
+
+    $ vendor/bin/phpspec run
+
+## Security
+
+If you discover any security related issues, please email <ivan@codezero.be> instead of using the issue tracker.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 ---
 [![Analytics](https://ga-beacon.appspot.com/UA-58876018-1/codezero-be/courier)](https://github.com/igrigorik/ga-beacon)
