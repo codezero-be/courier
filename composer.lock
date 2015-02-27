@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "codezero/curl",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codezero-be/curl.git",
-                "reference": "c6952bbf264d8d55ef232a56dcc85f7941a2f64f"
+                "reference": "c1385479886662b6276c18dd9140df529959d95c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codezero-be/curl/zipball/c6952bbf264d8d55ef232a56dcc85f7941a2f64f",
-                "reference": "c6952bbf264d8d55ef232a56dcc85f7941a2f64f",
+                "url": "https://api.github.com/repos/codezero-be/curl/zipball/c1385479886662b6276c18dd9140df529959d95c",
+                "reference": "c1385479886662b6276c18dd9140df529959d95c",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "http",
                 "request"
             ],
-            "time": "2015-02-02 23:20:02"
+            "time": "2015-02-19 19:53:46"
         },
         {
             "name": "illuminate/contracts",
@@ -98,12 +98,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/khoaofgod/phpfastcache.git",
-                "reference": "496685c5e92b1a91f61a24ac096c1a61e714449a"
+                "reference": "ff305685e86f38a623aa8acb05283b0d03cb6996"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khoaofgod/phpfastcache/zipball/496685c5e92b1a91f61a24ac096c1a61e714449a",
-                "reference": "496685c5e92b1a91f61a24ac096c1a61e714449a",
+                "url": "https://api.github.com/repos/khoaofgod/phpfastcache/zipball/ff305685e86f38a623aa8acb05283b0d03cb6996",
+                "reference": "ff305685e86f38a623aa8acb05283b0d03cb6996",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
                 "redis",
                 "wincache"
             ],
-            "time": "2015-02-10 23:10:03"
+            "time": "2015-02-25 15:51:10"
         }
     ],
     "packages-dev": [
@@ -804,6 +804,7 @@
         "phpfastcache/phpfastcache": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"
     },
