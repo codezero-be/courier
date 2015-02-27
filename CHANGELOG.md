@@ -2,6 +2,10 @@
 
 All Notable changes to Courier will be documented in this file.
 
+## 2.1.1 (2015-02-27)
+
+- Fix htaccess issue with `phpFastCache`
+
 ## 2.1.0 (2015-02-16)
 
 - Add `phpFastCache` as default `CacheManager` for non-Laravel projects
