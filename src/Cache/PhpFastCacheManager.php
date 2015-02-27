@@ -139,7 +139,7 @@ class PhpFastCacheManager implements CacheManager {
      */
     private function setCachePath()
     {
-        $cachePath = __DIR__ . '/../../cache';
+        $cachePath = __DIR__ . '/../../.cache';
 
         if ( ! is_dir($cachePath))
         {
