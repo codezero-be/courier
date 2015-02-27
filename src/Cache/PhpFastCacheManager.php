@@ -148,6 +148,7 @@ class PhpFastCacheManager implements CacheManager {
         }
 
         phpFastCache::setup("path", $cachePath);
+        phpFastCache::setup("htaccess", false);
     }
 
 }
